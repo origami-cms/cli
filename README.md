@@ -6,7 +6,9 @@ Origami CLI is a tool that makes building websites for Origami CMS even easier.
 
 ## Installation
 Install Origami CLI globally on your machine for easiest use:
-`yarn global add origami-cli`
+`yarn global add origami-cli`.
+
+This will install a global tool that you can run from anywhere with the command `origami`.
 
 ---
 
