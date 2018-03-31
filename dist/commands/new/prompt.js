@@ -9,12 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
-}
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const inquirer_1 = __importDefault(require("inquirer"));
 const dot_object_1 = require("dot-object");
-const package_1 = __importDefault(require("../../lib/package"));
-const random_hex_1 = __importDefault(require("../../lib/random-hex"));
+const origami_core_lib_1 = require("origami-core-lib");
 const defaultData_1 = __importDefault(require("./defaultData"));
 const lodash_1 = __importDefault(require("lodash"));
 /**
@@ -24,8 +23,7 @@ const lodash_1 = __importDefault(require("lodash"));
 const required = (v) => {
     if (!v)
         return 'This field is required';
-    else
-        return true;
+    return true;
 };
 /**
  * Extracts modules out of the package.json file in the format of:
@@ -39,10 +37,13 @@ const required = (v) => {
 const listOther = (p, name, message, def) => {
     // Regex to extract value from dependencies
     const r = new RegExp(`origami-${name}-(.*)`);
+    let data = [];
     // Filter out the packages that are needed
-    const data = Object.keys(p.dependencies)
-        .filter(k => r.test(k))
-        .map((k) => r.exec(k)[1]);
+    if (p.dependencies) {
+        data = Object.keys(p.dependencies)
+            .filter(k => r.test(k))
+            .map((k) => r.exec(k)[1]);
+    }
     // Return a
     return [
         {
@@ -65,7 +66,8 @@ const listOther = (p, name, message, def) => {
  * @returns {Promise<Origami.Config>} Origami settings object
  */
 exports.default = () => __awaiter(this, void 0, void 0, function* () {
-    const p = (yield package_1.default()) || { dependencies: [] };
+    const _p = yield origami_core_lib_1.pkgjson.read();
+    const p = _p ? _p : { dependencies: {} };
     let answers = {};
     answers = Object.assign({}, answers, yield inquirer_1.default.prompt([
         // ------------------------------------------------------------- App
@@ -112,7 +114,7 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
     // ------------------------------------------------------------------ Server
     const serverDefault = {
         port: 9999,
-        secret: yield random_hex_1.default()
+        secret: yield origami_core_lib_1.random()
     };
     // Check if the user wants to use default config for server...
     if ((yield inquirer_1.default.prompt({
@@ -140,10 +142,13 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
         ]));
     }
     // Convert the answer from dot notation
-    const file = dot_object_1.object(answers);
+    dot_object_1.object(answers);
+    // @ts-ignore This is modifed by the dotObj
+    const file = answers;
     if (file.server.secret === 'Auto-generated secret') {
         file.server.secret = serverDefault.secret;
     }
     file.theme.name = file.theme.type;
+    delete file.theme.type;
     return file;
 });

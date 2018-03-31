@@ -7,12 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-}
 Object.defineProperty(exports, "__esModule", { value: true });
 const yarn = require('yarn-programmatic');
-const package_1 = __importDefault(require("../../lib/package"));
+const origami_core_lib_1 = require("origami-core-lib");
 /**
  * Installs the necessary node modules that are specifed in the config
  * @async
@@ -20,7 +17,10 @@ const package_1 = __importDefault(require("../../lib/package"));
  */
 exports.default = (config) => __awaiter(this, void 0, void 0, function* () {
     // Find the existing dependencies already installed
-    const p = yield package_1.default();
+    const _p = yield origami_core_lib_1.pkgjson.read();
+    if (!_p)
+        throw new Error('Could not find package.json');
+    const p = _p;
     const existing = p.dependencies || {};
     // Required dependencies for Origami to run
     let dependencies = [

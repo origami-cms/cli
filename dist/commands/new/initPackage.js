@@ -7,23 +7,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-}
 Object.defineProperty(exports, "__esModule", { value: true });
-const package_1 = __importDefault(require("../../lib/package"));
+const origami_core_lib_1 = require("origami-core-lib");
 /**
  * Creates a basic package.json file if it doesn't already exist
  * @param c Origami config file as json
  * @returns {Promise} When finished writing file
  */
 exports.default = (c) => __awaiter(this, void 0, void 0, function* () {
-    if (yield package_1.default())
+    if (yield origami_core_lib_1.pkgjson.read())
         Promise.resolve(true);
     const p = {
         name: c.app.name.replace(/\s/g, '-').toLowerCase(),
         dependencies: {},
         scripts: {}
     };
-    return package_1.write(p);
+    return origami_core_lib_1.pkgjson.write(p);
 });

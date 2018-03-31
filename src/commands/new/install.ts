@@ -1,7 +1,6 @@
 const yarn = require('yarn-programmatic');
-import {Origami} from "../../types/origami";
-import pkg from "../../lib/package";
-import PackageJson from "../../types/package-json";
+import {Origami, PackageJson} from 'origami-cms';
+import {pkgjson} from 'origami-core-lib';
 
 /**
  * Installs the necessary node modules that are specifed in the config
@@ -10,7 +9,10 @@ import PackageJson from "../../types/package-json";
  */
 export default async(config: Origami.Config): Promise<void> => {
     // Find the existing dependencies already installed
-    const p: PackageJson = await pkg();
+    const _p = await pkgjson.read();
+    if (!_p) throw new Error('Could not find package.json');
+    const p = _p as PackageJson;
+
     const existing = p.dependencies || {};
 
     // Required dependencies for Origami to run
@@ -38,4 +40,4 @@ export default async(config: Origami.Config): Promise<void> => {
     } catch (e) {
         console.log(e.message.red);
     }
-}
+};

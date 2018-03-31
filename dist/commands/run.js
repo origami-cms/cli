@@ -7,23 +7,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-}
 Object.defineProperty(exports, "__esModule", { value: true });
 const { spawn } = require('child_process');
-const config_1 = __importDefault(require("../lib/config"));
+const origami_core_lib_1 = require("origami-core-lib");
 const origami = require('origami-cms');
+require("colors");
 exports.command = 'run';
 exports.description = 'Run the Origami app';
 exports.handler = (yargs) => __awaiter(this, void 0, void 0, function* () {
     let c;
-    if (yargs.file)
+    if (yargs.file) {
         spawn('node', [`./${yargs.file}`], {
             detached: true,
             stdio: 'inherit'
         });
-    else if (c = yield config_1.default()) {
+    }
+    else if (c = yield origami_core_lib_1.config.read()) {
         new origami(c);
     }
     else {

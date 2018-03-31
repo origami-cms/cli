@@ -1,6 +1,6 @@
 import inq from 'inquirer';
-import config from '../../lib/config';
-import {Origami} from '../../types/origami';
+import {config} from 'origami-core-lib';
+import {Origami} from 'origami-cms';
 
 /**
  * Prompts user to override the existing app if there is already a config file
@@ -9,15 +9,19 @@ import {Origami} from '../../types/origami';
  * @returns {Promise<boolean>} Whether it's safe to continue or not
  */
 export default async(): Promise<boolean> => {
-    const existing: Origami.Config = await config();
-    if (existing) {
-        return (await inq.prompt({
-            type: 'confirm',
-            message: `Override existing app ${(existing.app.name || '').red}?`,
-            name: 'override',
-            default: false
-        })).override;
+    let existing = await config.read();
+    if (!existing) return true;
+
+    existing = existing as Origami.Config;
+
+    interface result {
+        override: boolean;
     }
 
-    return true;
-}
+    return (await inq.prompt({
+        type: 'confirm',
+        message: `Override existing app ${(existing.app.name || '').red}?`,
+        name: 'override',
+        default: false
+    }) as result).override;
+};

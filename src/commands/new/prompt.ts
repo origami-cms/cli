@@ -1,14 +1,26 @@
 import inq from 'inquirer';
-import {object as dotObj} from 'dot-object'
+import {object as dotObj} from 'dot-object';
 
-import config from '../../lib/config';
-import {Origami} from '../../types/origami';
-import pkg from '../../lib/package';
-import random from '../../lib/random-hex';
-import PackageJson from '../../types/package-json';
-import { Init } from '../../types/init.answers';
-import defaultData from "./defaultData";
+import {config, pkgjson, random} from 'origami-core-lib';
+import {Origami, PackageJson} from 'origami-cms';
+import defaultData from './defaultData';
 import _ from 'lodash';
+
+
+export interface Answers {
+    theme?: {
+        type: string
+    };
+    store?: {
+        type: string
+    };
+    server?: {
+        secret: string
+        port: string | number
+    };
+
+}
+
 
 /**
  * Validates a prompt to ensure there is a value
@@ -16,8 +28,9 @@ import _ from 'lodash';
  */
 const required = (v: string) => {
     if (!v) return 'This field is required';
-    else return true;
+    return true;
 };
+
 
 
 
@@ -30,15 +43,19 @@ const required = (v: string) => {
  * @param {String} def Default value
  * @returns {Array<Object>} Two Inquierer questions for selecting a value
  */
-const listOther = (p: PackageJson, name: string, message: string, def: string): Array<inq.Question> => {
+const listOther = (p: PackageJson, name: Origami.PackageType, message: string, def: string): inq.Question[] => {
 
     // Regex to extract value from dependencies
     const r: RegExp = new RegExp(`origami-${name}-(.*)`);
 
+    let data: Object[] = [];
+
     // Filter out the packages that are needed
-    const data: Array<Object> = Object.keys(p.dependencies)
-        .filter(k => r.test(k))
-        .map((k: string) => r.exec(k)![1]);
+    if (p.dependencies) {
+        data = Object.keys(p.dependencies)
+            .filter(k => r.test(k))
+            .map((k: string) => r.exec(k)![1]);
+    }
 
 
     // Return a
@@ -67,10 +84,11 @@ const listOther = (p: PackageJson, name: string, message: string, def: string): 
  */
 export default async(): Promise<Origami.Config> => {
 
-    const p: PackageJson = (await pkg()) || { dependencies: [] };
+    const _p = await pkgjson.read();
+    const p: PackageJson = _p ? _p as PackageJson : {dependencies: {}};
 
 
-    let answers: Init.Answers = {};
+    let answers: Answers = {};
     answers = {
         ...answers,
         ...await inq.prompt([
@@ -126,17 +144,21 @@ export default async(): Promise<Origami.Config> => {
         secret: await random()
     };
 
+    interface result {
+        default: boolean;
+    }
+
     // Check if the user wants to use default config for server...
     if ((await inq.prompt({
         type: 'confirm',
         message: 'Use default server config?',
         name: 'default'
-    })).default) {
+    }) as result).default) {
 
         // Use default
         answers = {
             ...answers,
-            ...{ server: serverDefault }
+            ...{server: serverDefault}
         };
 
     } else {
@@ -161,13 +183,25 @@ export default async(): Promise<Origami.Config> => {
 
 
     // Convert the answer from dot notation
-    const file: Origami.Config = dotObj(answers);
+    dotObj(answers);
+
+    // Temp interface so the theme.type can be converted
+    interface TempConfig extends Origami.Config {
+        theme: {
+            type: string,
+            name: string
+        };
+    }
+
+    // @ts-ignore This is modifed by the dotObj
+    const file = answers as TempConfig;
 
     if (file.server.secret === 'Auto-generated secret') {
         file.server.secret = serverDefault.secret;
     }
 
     file.theme.name = file.theme.type;
+    delete file.theme.type;
 
-    return file;
-}
+    return file as Origami.Config;
+};

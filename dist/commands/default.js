@@ -21,4 +21,3 @@ function handler(yargs) {
     });
 }
 exports.handler = handler;
-;
