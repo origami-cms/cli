@@ -47,7 +47,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var INQ = require('inquirer');
 var dot_object_1 = require("dot-object");
 var origami_core_lib_1 = require("origami-core-lib");
-var defaultData = require('./defaultData');
+var defaultData_1 = require("./defaultData");
 var _ = require("lodash");
 /**
  * Validates a prompt to ensure there is a value
@@ -77,11 +77,12 @@ var listOther = function (p, name, message, def) {
             .filter(function (k) { return r.test(k); })
             .map(function (k) { return r.exec(k)[1]; });
     }
+    console.log(defaultData_1.default[name], name, defaultData_1.default);
     // Return a
     return [
         {
             type: 'list',
-            choices: _.uniq(data.concat(defaultData[name], ['Other'])),
+            choices: _.uniq(data.concat(defaultData_1.default[name], ['Other']).filter(function (v) { return v; })),
             name: name + ".type",
             default: data[0] || def,
             message: message
@@ -182,7 +183,7 @@ exports.default = (function () { return __awaiter(_this, void 0, void 0, functio
                         }
                     ])];
             case 6:
-                // Otherwise cusotmise...
+                // Otherwise cusotmize...
                 answers = __assign.apply(void 0, _c.concat([_d.sent()]));
                 _d.label = 7;
             case 7:

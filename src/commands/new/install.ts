@@ -9,6 +9,7 @@ import {Origami, PackageJson, pkgjson} from 'origami-core-lib';
 export default async(config: Origami.Config): Promise<void> => {
     // Find the existing dependencies already installed
     const _p = await pkgjson.read();
+
     if (!_p) throw new Error('Could not find package.json');
     const p = _p as PackageJson;
 

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var inquirer_1 = require("inquirer");
+var inq = require("inquirer");
 var origami_core_lib_1 = require("origami-core-lib");
 /**
  * Prompts user to override the existing app if there is already a config file
@@ -54,7 +54,7 @@ exports.default = (function () { return __awaiter(_this, void 0, void 0, functio
                 if (!existing)
                     return [2 /*return*/, true];
                 existing = existing;
-                return [4 /*yield*/, inquirer_1.default.prompt({
+                return [4 /*yield*/, inq.prompt({
                         type: 'confirm',
                         message: "Override existing app " + (existing.app.name || '').red + "?",
                         name: 'override',

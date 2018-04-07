@@ -3,7 +3,7 @@ const INQ = require('inquirer');
 import {object as dotObj} from 'dot-object';
 
 import {Origami, PackageJson, config, pkgjson, random} from 'origami-core-lib';
-const defaultData = require('./defaultData');
+import defaultData from './defaultData';
 import * as _ from 'lodash';
 
 
@@ -33,7 +33,6 @@ const required = (v: string) => {
 
 
 
-
 /**
  * Extracts modules out of the package.json file in the format of:
  * 'origami-{{name}}-x' and converts them into Inquirer questions.
@@ -57,12 +56,14 @@ const listOther = (p: PackageJson, name: Origami.ModuleType, message: string, de
             .map((k: string) => r.exec(k)![1]);
     }
 
+    console.log(defaultData[name], name, defaultData);
+
 
     // Return a
     return [
         {
             type: 'list',
-            choices: _.uniq([...data, ...defaultData[name], 'Other']),
+            choices: _.uniq([...data, ...defaultData[name], 'Other'].filter(v => v)),
             name: `${name}.type`,
             default: data[0] || def,
             message
@@ -132,7 +133,7 @@ export default async(): Promise<Origami.Config> => {
                 validate: required
             },
 
-            // ----------------------------------------------------------- Theme
+            // // ----------------------------------------------------------- Theme
             ...listOther(p, 'theme', 'Theme', 'snow')
         ])
     };
@@ -161,8 +162,9 @@ export default async(): Promise<Origami.Config> => {
             ...{server: serverDefault}
         };
 
+
     } else {
-        // Otherwise cusotmise...
+        // Otherwise cusotmize...
         answers = {
             ...answers,
             ...await INQ.prompt([
@@ -182,6 +184,7 @@ export default async(): Promise<Origami.Config> => {
     }
 
 
+
     // Convert the answer from dot notation
     dotObj(answers);
 
@@ -196,11 +199,13 @@ export default async(): Promise<Origami.Config> => {
     // @ts-ignore This is modifed by the dotObj
     const file = answers as TempConfig;
 
+
     if (file.server.secret === 'Auto-generated secret') {
         file.server.secret = serverDefault.secret;
     }
 
     file.theme.name = file.theme.type;
+
     delete file.theme.type;
 
     return file as Origami.Config;

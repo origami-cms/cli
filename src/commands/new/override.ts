@@ -1,4 +1,4 @@
-import inq from 'inquirer';
+import * as inq from 'inquirer';
 import {Origami, config} from 'origami-core-lib';
 
 /**

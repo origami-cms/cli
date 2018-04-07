@@ -47,6 +47,7 @@ export const handler = async(yargs: Arguments) => {
     await config.write(c);
     await initPackage(c);
 
+
     // Install the dependencies that are yet to be installed
     await install(c);
 
