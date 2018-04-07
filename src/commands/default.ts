@@ -9,6 +9,6 @@ const {handler: run} = require('./run');
 
 export const command = '$0';
 export const description = 'Run the Origami app';
-export async function handler(yargs: Object) {
+export const handler =  async(yargs: Object) => {
     run(yargs);
-}
+};

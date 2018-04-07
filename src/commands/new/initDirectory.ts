@@ -1,5 +1,5 @@
 import {stat} from 'fs';
-import mkdirp from 'mkdirp';
+const mkdirp = require('mkdirp');
 import {promisify} from 'util';
 
 

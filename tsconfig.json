@@ -4,7 +4,7 @@
   ],
   "exclude": [],
   "compilerOptions": {
-    "target": "es6",
+    "target": "es5",
     "module": "commonjs",
     "lib": [
       "es5",
@@ -15,7 +15,7 @@
     "outDir": "dist",
     "strict": true,
     "moduleResolution": "node",
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "allowSyntheticDefaultImports": true
   }
 }

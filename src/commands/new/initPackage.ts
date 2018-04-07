@@ -1,5 +1,4 @@
-import {pkgjson} from 'origami-core-lib';
-import {Origami, PackageJson} from 'origami-cms';
+import {Origami, PackageJson, pkgjson} from 'origami-core-lib';
 
 /**
  * Creates a basic package.json file if it doesn't already exist

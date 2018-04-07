@@ -1,8 +1,7 @@
-import {Origami} from 'origami-cms';
-
+import {Origami} from 'origami-core-lib';
 
 export type defaultData = {
-    [type in Origami.PackageType]: string[];
+    [type in Origami.ModuleType]: string[];
 };
 
 export default {

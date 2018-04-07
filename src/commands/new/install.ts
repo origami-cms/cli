@@ -1,6 +1,5 @@
 const yarn = require('yarn-programmatic');
-import {Origami, PackageJson} from 'origami-cms';
-import {pkgjson} from 'origami-core-lib';
+import {Origami, PackageJson, pkgjson} from 'origami-core-lib';
 
 /**
  * Installs the necessary node modules that are specifed in the config

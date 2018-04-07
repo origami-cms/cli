@@ -1,10 +1,10 @@
 import inq from 'inquirer';
+const INQ = require('inquirer');
 import {object as dotObj} from 'dot-object';
 
-import {config, pkgjson, random} from 'origami-core-lib';
-import {Origami, PackageJson} from 'origami-cms';
-import defaultData from './defaultData';
-import _ from 'lodash';
+import {Origami, PackageJson, config, pkgjson, random} from 'origami-core-lib';
+const defaultData = require('./defaultData');
+import * as _ from 'lodash';
 
 
 export interface Answers {
@@ -43,7 +43,7 @@ const required = (v: string) => {
  * @param {String} def Default value
  * @returns {Array<Object>} Two Inquierer questions for selecting a value
  */
-const listOther = (p: PackageJson, name: Origami.PackageType, message: string, def: string): inq.Question[] => {
+const listOther = (p: PackageJson, name: Origami.ModuleType, message: string, def: string): inq.Question[] => {
 
     // Regex to extract value from dependencies
     const r: RegExp = new RegExp(`origami-${name}-(.*)`);
@@ -91,7 +91,7 @@ export default async(): Promise<Origami.Config> => {
     let answers: Answers = {};
     answers = {
         ...answers,
-        ...await inq.prompt([
+        ...await INQ.prompt([
             // ------------------------------------------------------------- App
             {
                 name: 'app.name',
@@ -149,7 +149,7 @@ export default async(): Promise<Origami.Config> => {
     }
 
     // Check if the user wants to use default config for server...
-    if ((await inq.prompt({
+    if ((await INQ.prompt({
         type: 'confirm',
         message: 'Use default server config?',
         name: 'default'
@@ -165,7 +165,7 @@ export default async(): Promise<Origami.Config> => {
         // Otherwise cusotmise...
         answers = {
             ...answers,
-            ...await inq.prompt([
+            ...await INQ.prompt([
                 {
                     message: 'Server port',
                     default: serverDefault.port,

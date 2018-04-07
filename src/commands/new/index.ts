@@ -5,26 +5,25 @@ const bird = require('origami-bird');
 const inq = require('inquirer');
 
 
-import {Arguments, CommandModule} from 'yargs';
+import yargs, {Arguments, CommandModule} from 'yargs';
 import override from './override';
 import initDirectory from './initDirectory';
 import prompt from './prompt';
-import {config} from 'origami-core-lib';
+import {Origami, config} from 'origami-core-lib';
 import initPackage from './initPackage';
 import install from './install';
-import {Origami} from 'origami-cms';
 
 
 export const command = 'new [directory]';
 export const description = 'Initialize a new Origami app';
 
-export const builder: CommandModule['builder'] = {
+export const builder = {
     directory: {
         default: './',
         alias: 'd',
         description: 'Directory to initialize the new app'
     }
-};
+} as CommandModule['builder'];
 
 export const handler = async(yargs: Arguments) => {
     const t = Date.now();

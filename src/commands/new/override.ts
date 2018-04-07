@@ -1,6 +1,5 @@
 import inq from 'inquirer';
-import {config} from 'origami-core-lib';
-import {Origami} from 'origami-cms';
+import {Origami, config} from 'origami-core-lib';
 
 /**
  * Prompts user to override the existing app if there is already a config file

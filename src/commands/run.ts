@@ -1,12 +1,12 @@
 const {spawn} = require('child_process');
-import {config} from 'origami-core-lib';
-const origami = require('origami-cms');
+import {config, Origami} from 'origami-core-lib';
+import origami from 'origami-cms';
 import {Arguments} from 'yargs';
 import 'colors';
 
-exports.command = 'run';
-exports.description = 'Run the Origami app';
-exports.handler = async (yargs: Arguments) => {
+export const command = 'run';
+export const description = 'Run the Origami app';
+export const handler = async (yargs: Arguments) => {
     let c;
     if (yargs.file) {
         spawn('node', [`./${yargs.file}`], {
@@ -14,7 +14,7 @@ exports.handler = async (yargs: Arguments) => {
             stdio: 'inherit'
         });
     } else if (c = await config.read()) {
-        new origami(c);
+        new origami(c as Origami.Config);
     } else {
         console.log(
             'No Origami app found.\n    Try running:'.grey,
