@@ -19,8 +19,8 @@
     "lodash": "^4.17.5",
     "mkdirp": "^0.5.1",
     "origami-bird": "^1.0.0",
-    "origami-cms": "^0.0.5",
-    "origami-core-lib": "^0.1.0",
+    "origami-cms": "^0.2.5",
+    "origami-core-lib": "0.3.1",
     "yargs": "^11.0.0",
     "yarn-programmatic": "^0.0.2"
   },
@@ -43,6 +43,6 @@
     "typescript": "^2.7.2"
   },
   "bin": {
-    "origami": "dist/index"
+    "origami": "dist/index.js"
   }
 }
