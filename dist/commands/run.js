@@ -40,10 +40,11 @@ var spawn = require('child_process').spawn;
 var origami_core_lib_1 = require("origami-core-lib");
 var origami_cms_1 = require("origami-cms");
 require("colors");
+var path = require("path");
 exports.command = 'run';
 exports.description = 'Run the Origami app';
 exports.handler = function (yargs) { return __awaiter(_this, void 0, void 0, function () {
-    var c;
+    var c, _origami;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -56,7 +57,14 @@ exports.handler = function (yargs) { return __awaiter(_this, void 0, void 0, fun
             case 1: return [4 /*yield*/, origami_core_lib_1.config.read()];
             case 2:
                 if (c = _a.sent()) {
-                    new origami_cms_1.default(c);
+                    _origami = origami_cms_1.default;
+                    // Attempt to load origami with the local version of the module
+                    try {
+                        _origami = require(path.resolve(process.cwd(), 'node_modules/origami-cms')).Origami;
+                        // No local installation
+                    }
+                    catch (e) { }
+                    new _origami(c);
                 }
                 else {
                     console.log('No Origami app found.\n    Try running:'.grey, 'origami new'.magenta, 'to create a new app\n    See:'.grey, 'origami --help'.magenta, 'for more details'.grey);

@@ -3,6 +3,7 @@ import {config, Origami} from 'origami-core-lib';
 import origami from 'origami-cms';
 import {Arguments} from 'yargs';
 import 'colors';
+import * as path from 'path';
 
 export const command = 'run';
 export const description = 'Run the Origami app';
@@ -14,7 +15,17 @@ export const handler = async (yargs: Arguments) => {
             stdio: 'inherit'
         });
     } else if (c = await config.read()) {
-        new origami(c as Origami.Config);
+        let _origami = origami;
+
+        // Attempt to load origami with the local version of the module
+        try {
+            _origami = require(path.resolve(process.cwd(), 'node_modules/origami-cms')).Origami;
+
+        // No local installation
+        } catch (e) {}
+
+        new _origami(c as Origami.Config);
+
     } else {
         console.log(
             'No Origami app found.\n    Try running:'.grey,
