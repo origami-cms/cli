@@ -43,6 +43,14 @@ var fsStat = promisify(fs.stat);
 var run = require('./run').handler;
 exports.command = '$0';
 exports.description = 'Run the Origami app';
+exports.builder = {
+    verbose: {
+        alias: 'v',
+        describe: 'Verbose logging',
+        type: 'boolean',
+        default: false
+    }
+};
 exports.handler = function (yargs) { return __awaiter(_this, void 0, void 0, function () {
     return __generator(this, function (_a) {
         run(yargs);

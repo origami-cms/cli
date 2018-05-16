@@ -1,13 +1,23 @@
 const {spawn} = require('child_process');
 import {config, Origami} from 'origami-core-lib';
 import origami from 'origami-cms';
-import {Arguments} from 'yargs';
+import {Arguments, CommandBuilder} from 'yargs';
 import 'colors';
 import * as path from 'path';
 
 export const command = 'run';
 export const description = 'Run the Origami app';
+export const builder: CommandBuilder = {
+    verbose: {
+        alias: 'v',
+        describe: 'Verbose logging',
+        type: 'boolean',
+        default: false
+    }
+};
 export const handler = async (yargs: Arguments) => {
+    if (yargs.verbose) process.env.LOG_VERBOSE = 'true';
+
     let c;
     if (yargs.file) {
         spawn('node', [`./${yargs.file}`], {

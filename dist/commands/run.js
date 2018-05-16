@@ -43,11 +43,21 @@ require("colors");
 var path = require("path");
 exports.command = 'run';
 exports.description = 'Run the Origami app';
+exports.builder = {
+    verbose: {
+        alias: 'v',
+        describe: 'Verbose logging',
+        type: 'boolean',
+        default: false
+    }
+};
 exports.handler = function (yargs) { return __awaiter(_this, void 0, void 0, function () {
     var c, _origami;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                if (yargs.verbose)
+                    process.env.LOG_VERBOSE = 'true';
                 if (!yargs.file) return [3 /*break*/, 1];
                 spawn('node', ["./" + yargs.file], {
                     detached: true,
