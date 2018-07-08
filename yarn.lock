@@ -2438,33 +2438,6 @@ origami-core-server@^0.4.2:
     request-promise-native "^1.0.5"
     routington "^1.0.3"
 
-origami-core-server@^0.5.2-alpha.1:
-  version "0.5.2-alpha.1"
-  resolved "https://registry.yarnpkg.com/origami-core-server/-/origami-core-server-0.5.2-alpha.1.tgz#bf5c2f3218c4e8f0e15b49bfbb457f58056a6433"
-  dependencies:
-    colors "^1.1.2"
-    corser "^2.0.1"
-    express "^4.15.4"
-    express-fileupload "^0.4.0"
-    express-list-endpoints "^3.0.1"
-    helmet "^3.12.0"
-    http-status-codes "^1.3.0"
-    json-query "^2.2.2"
-    lodash "^4.17.4"
-    marked "^0.3.6"
-    npm-programmatic "^0.0.10"
-    origami-core-lib "^0.3.9"
-    origami-core-server "^0.3.7"
-    origami-core-server-statuses "^0.0.8"
-    origami-plugin-auth "^1.0.0"
-    origami-plugin-core-api "^0.1.2"
-    origami-plugin-media "^1.0.1"
-    origami-plugin-user-profiles "^1.0.0"
-    pluralize "^7.0.0"
-    recursive-readdir "^2.2.1"
-    request "^2.85.0"
-    request-promise-native "^1.0.5"
-
 origami-core-server@^0.5.2-alpha.2:
   version "0.5.2-alpha.2"
   resolved "https://registry.yarnpkg.com/origami-core-server/-/origami-core-server-0.5.2-alpha.2.tgz#8aa2457d97ec93edc621f0e9fc2fff58f8fed1c2"

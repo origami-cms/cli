@@ -22,7 +22,6 @@
     "origami-bird": "^1.0.0",
     "origami-cms": "^0.2.15-alpha.4",
     "origami-core-lib": "^0.3.9",
-    "origami-core-server": "^0.5.2-alpha.1",
     "yargs": "^11.0.0",
     "yarn-programmatic": "^0.0.2"
   },
