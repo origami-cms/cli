@@ -12,6 +12,7 @@
     "lint": "tslint -s node_modules/custom-tslint-formatters/formatters -t grouped src/**/*.ts --fix"
   },
   "dependencies": {
+    "@types/express": "^4.16.0",
     "colors": "^1.2.0",
     "deepmerge": "^2.1.0",
     "dot-object": "^1.7.0",
@@ -19,8 +20,9 @@
     "lodash": "^4.17.5",
     "mkdirp": "^0.5.1",
     "origami-bird": "^1.0.0",
-    "origami-cms": "^0.2.5",
-    "origami-core-lib": "0.3.1",
+    "origami-cms": "^0.2.15-alpha.4",
+    "origami-core-lib": "^0.3.9",
+    "origami-core-server": "^0.5.2-alpha.1",
     "yargs": "^11.0.0",
     "yarn-programmatic": "^0.0.2"
   },
@@ -43,6 +45,6 @@
     "typescript": "^2.7.2"
   },
   "bin": {
-    "origami": "dist/index.js"
+    "origami": "dist/index"
   }
 }

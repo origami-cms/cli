@@ -56,8 +56,6 @@ const listOther = (p: PackageJson, name: Origami.ModuleType, message: string, de
             .map((k: string) => r.exec(k)![1]);
     }
 
-    console.log(defaultData[name], name, defaultData);
-
 
     // Return a
     return [
@@ -133,8 +131,8 @@ export default async(): Promise<Origami.Config> => {
                 validate: required
             },
 
-            // // ----------------------------------------------------------- Theme
-            ...listOther(p, 'theme', 'Theme', 'snow')
+            // ----------------------------------------------------------- Theme
+            // ...listOther(p, 'theme', 'Theme', 'snow')
         ])
     };
 
@@ -204,9 +202,8 @@ export default async(): Promise<Origami.Config> => {
         file.server.secret = serverDefault.secret;
     }
 
-    file.theme.name = file.theme.type;
-
-    delete file.theme.type;
+    // file.theme.name = file.theme.type;
+    // delete file.theme.type;
 
     return file as Origami.Config;
 };

@@ -2,7 +2,7 @@ const yarn = require('yarn-programmatic');
 import {Origami, PackageJson, pkgjson} from 'origami-core-lib';
 
 /**
- * Installs the necessary node modules that are specifed in the config
+ * Installs the necessary node modules that are specified in the config
  * @async
  * @returns {Promise<boolean>} Whether it's safe to continue or not
  */
@@ -18,8 +18,7 @@ export default async(config: Origami.Config): Promise<void> => {
     // Required dependencies for Origami to run
     let dependencies = [
         'origami-cms',
-        `origami-store-${config.store.type}`,
-        `origami-theme-${config.theme.name}`
+        `origami-store-${config.store.type}`
     ];
 
     // Filter with what's currently installed

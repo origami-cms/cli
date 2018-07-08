@@ -77,7 +77,6 @@ var listOther = function (p, name, message, def) {
             .filter(function (k) { return r.test(k); })
             .map(function (k) { return r.exec(k)[1]; });
     }
-    console.log(defaultData_1.default[name], name, defaultData_1.default);
     // Return a
     return [
         {
@@ -146,8 +145,8 @@ exports.default = (function () { return __awaiter(_this, void 0, void 0, functio
                             name: 'store.password',
                             message: 'Store password',
                             validate: required
-                        }
-                    ], listOther(p, 'theme', 'Theme', 'snow')))];
+                        },
+                    ]))];
             case 2:
                 answers = __assign.apply(void 0, _a.concat([_d.sent()]));
                 _b = {
@@ -193,8 +192,8 @@ exports.default = (function () { return __awaiter(_this, void 0, void 0, functio
                 if (file.server.secret === 'Auto-generated secret') {
                     file.server.secret = serverDefault.secret;
                 }
-                file.theme.name = file.theme.type;
-                delete file.theme.type;
+                // file.theme.name = file.theme.type;
+                // delete file.theme.type;
                 return [2 /*return*/, file];
         }
     });

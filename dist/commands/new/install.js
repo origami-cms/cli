@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var yarn = require('yarn-programmatic');
 var origami_core_lib_1 = require("origami-core-lib");
 /**
- * Installs the necessary node modules that are specifed in the config
+ * Installs the necessary node modules that are specified in the config
  * @async
  * @returns {Promise<boolean>} Whether it's safe to continue or not
  */
@@ -56,8 +56,7 @@ exports.default = (function (config) { return __awaiter(_this, void 0, void 0, f
                 existing = p.dependencies || {};
                 dependencies = [
                     'origami-cms',
-                    "origami-store-" + config.store.type,
-                    "origami-theme-" + config.theme.name
+                    "origami-store-" + config.store.type
                 ];
                 // Filter with what's currently installed
                 dependencies = dependencies.filter(function (d) { return !existing[d]; });
