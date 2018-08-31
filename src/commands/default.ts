@@ -17,6 +17,12 @@ export const builder: CommandBuilder = {
         describe: 'Verbose logging',
         type: 'boolean',
         default: false
+    },
+    open: {
+        alias: 'o',
+        describe: 'Open the app in the browser',
+        type: 'boolean',
+        default: false
     }
 };
 export const handler =  async(yargs: Object) => {

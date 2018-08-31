@@ -5,13 +5,13 @@ const bird = require('origami-bird');
 const inq = require('inquirer');
 
 
-import yargs, {Arguments, CommandModule} from 'yargs';
-import override from './override';
+import {config, Origami} from 'origami-core-lib';
+import {Arguments, CommandModule} from 'yargs';
 import initDirectory from './initDirectory';
-import prompt from './prompt';
-import {Origami, config} from 'origami-core-lib';
 import initPackage from './initPackage';
 import install from './install';
+import override from './override';
+import prompt from './prompt';
 
 
 export const command = 'new [directory]';

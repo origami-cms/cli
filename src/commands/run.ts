@@ -4,6 +4,7 @@ import origami from 'origami-cms';
 import {Arguments, CommandBuilder} from 'yargs';
 import 'colors';
 import * as path from 'path';
+import {exec} from 'child_process';
 
 export const command = 'run';
 export const description = 'Run the Origami app';
@@ -13,8 +14,15 @@ export const builder: CommandBuilder = {
         describe: 'Verbose logging',
         type: 'boolean',
         default: false
+    },
+    open: {
+        alias: 'o',
+        describe: 'Open the app in the browser',
+        type: 'boolean',
+        default: false
     }
 };
+
 export const handler = async (yargs: Arguments) => {
     if (yargs.verbose) process.env.LOG_VERBOSE = 'true';
 
@@ -35,6 +43,12 @@ export const handler = async (yargs: Arguments) => {
         } catch (e) {}
 
         new _origami(c as Origami.Config);
+
+        if (c.server.port && yargs.open) {
+            setTimeout(() => {
+                exec(`open http://localhost:${c.server.port}/`);
+            }, 1000);
+        }
 
     } else {
         console.log(

@@ -1,6 +1,6 @@
 import {stat} from 'fs';
-const mkdirp = require('mkdirp');
 import {promisify} from 'util';
+const mkdirp = require('mkdirp');
 
 
 const fsStat = promisify(stat);
