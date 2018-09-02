@@ -1,9 +1,5 @@
-const fs = require('fs');
 const path = require('path');
-const {promisify} = require('util');
 const bird = require('origami-bird');
-const inq = require('inquirer');
-
 
 import {config, Origami} from 'origami-core-lib';
 import {Arguments, CommandModule} from 'yargs';

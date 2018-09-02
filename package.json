@@ -12,6 +12,7 @@
     "lint": "tslint -s node_modules/custom-tslint-formatters/formatters -t grouped src/**/*.ts --fix"
   },
   "dependencies": {
+    "@types/fs-extra": "^5.0.4",
     "@types/tmp": "^0.0.33",
     "cli-spinner": "^0.2.8",
     "colors": "^1.2.0",

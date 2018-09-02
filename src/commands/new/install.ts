@@ -6,7 +6,7 @@ import {Origami, PackageJson, pkgjson} from 'origami-core-lib';
  * @async
  * @returns {Promise<boolean>} Whether it's safe to continue or not
  */
-export default async(config: Origami.Config): Promise<void> => {
+export default async (config: Origami.Config): Promise<void> => {
     // Find the existing dependencies already installed
     const _p = await pkgjson.read();
 
@@ -16,10 +16,13 @@ export default async(config: Origami.Config): Promise<void> => {
     const existing = p.dependencies || {};
 
     // Required dependencies for Origami to run
-    let dependencies = [
-        'origami-cms',
-        `origami-store-${config.store.type}`
-    ];
+    let dependencies = ['origami-cms'];
+
+    if (config.store && config.store.type) {
+        dependencies.push(
+            `origami-store-${config.store.type}`
+        );
+    }
 
     // Filter with what's currently installed
     dependencies = dependencies.filter(d => !existing[d]);

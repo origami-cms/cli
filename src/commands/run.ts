@@ -1,12 +1,13 @@
 const {spawn} = require('child_process');
-import {config, Origami} from 'origami-core-lib';
-import origami from 'origami-cms';
-import {Arguments, CommandBuilder} from 'yargs';
-import 'colors';
-import * as path from 'path';
 import {exec} from 'child_process';
+import 'colors';
+import origami from 'origami-cms';
+import {config, Origami} from 'origami-core-lib';
+import * as path from 'path';
+import {Arguments, CommandBuilder} from 'yargs';
+const fs = require('fs-extra');
 
-export const command = 'run';
+export const command = 'run [file]';
 export const description = 'Run the Origami app';
 export const builder: CommandBuilder = {
     verbose: {
@@ -23,27 +24,34 @@ export const builder: CommandBuilder = {
     }
 };
 
+/**
+ * Run Origami with a file or directory (defaults to .origami file from dir),
+ * and optionally open the app in the browser.
+ */
 export const handler = async (yargs: Arguments) => {
     if (yargs.verbose) process.env.LOG_VERBOSE = 'true';
 
-    let c;
-    if (yargs.file) {
-        spawn('node', [`./${yargs.file}`], {
-            detached: true,
-            stdio: 'inherit'
-        });
-    } else if (c = await config.read()) {
+    let c: Origami.Config;
+
+    // Allow for default $0 AND run command
+    let input = yargs._[0];
+    if (input === 'run') input = yargs.file || './';
+
+    c = await config.read(input);
+
+    if (c) {
         let _origami = origami;
 
-        // Attempt to load origami with the local version of the module
+        // Attempt to load a local instance of origami-cms in place of the CLI's default version
         try {
             _origami = require(path.resolve(process.cwd(), 'node_modules/origami-cms')).Origami;
-
         // No local installation
         } catch (e) {}
 
+        // Run Origami
         new _origami(c as Origami.Config);
 
+        // If there's a server port and the open option, load the app in the browser
         if (c.server.port && yargs.open) {
             setTimeout(() => {
                 exec(`open http://localhost:${c.server.port}/`);

@@ -86,6 +86,9 @@ export default async(): Promise<Origami.Config> => {
     const _p = await pkgjson.read();
     const p: PackageJson = _p ? _p as PackageJson : {dependencies: {}};
 
+    const when = (key: string) =>
+        (response: any) => response && response[key].type !== 'None';
+
 
     let answers: Answers = {};
     answers = {
@@ -101,30 +104,35 @@ export default async(): Promise<Origami.Config> => {
             // ----------------------------------------------------------- Store
             ...listOther(p, 'store', 'Store (Database) type', 'mongodb'),
             {
+                when: when('store'),
                 name: 'store.host',
                 message: 'Store host',
                 default: 'localhost',
                 validate: required
             },
             {
+                when: when('store'),
                 name: 'store.port',
                 message: 'Store port',
                 default: '27017',
                 validate: required
             },
             {
+                when: when('store'),
                 name: 'store.database',
                 message: 'Store database',
                 default: 'origami-app',
                 validate: required
             },
             {
+                when: when('store'),
                 name: 'store.username',
                 message: 'Store username',
                 default: 'origami',
                 validate: required
             },
             {
+                when: when('store'),
                 type: 'password',
                 name: 'store.password',
                 message: 'Store password',
@@ -182,6 +190,9 @@ export default async(): Promise<Origami.Config> => {
     }
 
 
+    // If no store is selected, don't install it
+    if (answers.store && answers.store.type === 'None') delete answers.store;
+
 
     // Convert the answer from dot notation
     dotObj(answers);
@@ -194,7 +205,7 @@ export default async(): Promise<Origami.Config> => {
         };
     }
 
-    // @ts-ignore This is modifed by the dotObj
+    // @ts-ignore This is modified by the dotObj
     const file = answers as TempConfig;
 
 
