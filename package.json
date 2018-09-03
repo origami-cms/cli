@@ -8,7 +8,7 @@
   "author": "Tristan Matthias <hello@tristanmatthias.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc && mv dist/index.js dist/index",
+    "build": "tsc",
     "lint": "tslint -s node_modules/custom-tslint-formatters/formatters -t grouped src/**/*.ts --fix"
   },
   "dependencies": {

@@ -6,6 +6,7 @@ const extract = require('extract-zip');
 const {Spinner} = require('cli-spinner');
 
 import {Arguments, CommandModule} from 'yargs';
+import {Response} from 'request';
 
 
 export const command = 'example [example]';
@@ -23,9 +24,10 @@ const REPO = (repo: string) => `https://api.github.com/repos/origami-cms/example
 export const handler = async(yargs: Arguments) => {
     const ex = yargs.example;
     const time = Date.now();
-    const download = () => new Promise((res, rej) => {
 
-        tmp.file(async(err, file, fd, clean) => {
+    const download = (): Promise<boolean | string> => new Promise((res, rej) => {
+
+        tmp.file(async(err: Error, file: string) => {
             if (err) return rej(err);
 
             const headers = {
@@ -42,16 +44,28 @@ export const handler = async(yargs: Arguments) => {
             };
 
             const spinner = new Spinner({
-                text: '%s Downloading'
+                text: '%s'.yellow + ' Downloading example '.magenta + ex.yellow
             });
-            spinner.setSpinnerString(18);
+
+            const spinnerType = 18;
+            spinner.setSpinnerString(spinnerType);
             spinner.start();
 
             let ok = true;
-            request(options, () => {
+            request(options, (err: NodeJS.ErrnoException) => {
                 spinner.stop(true);
+
+                if (err) {
+                    ok = false;
+                    // @ts-ignore This is actually a string
+                    if (err.errno === 'ECONNREFUSED') {
+                        console.error('\n❌ Could not connect. Please check your internet connection\n'.red);
+                        return;
+                    }
+                }
+
                 if (ok) {
-                    console.log(`\nSucessfully generated Origami example '${ex}'`.green);
+                    console.log(`\n✅ Successfully generated Origami example '${ex}'`.green);
                     console.log(`Run 'origami' in the '${ex}' directory to start the app\n`.green);
                     console.log(`Completed in ${(Date.now() - time) / 1000} seconds\n`.blue);
                     res(file);
@@ -61,25 +75,30 @@ export const handler = async(yargs: Arguments) => {
                     res(false);
                 }
             })
-                .on('response', r => {
+                .on('response', (r: Response) => {
+                    // tslint:disable-next-line no-magic-numbers
                     if (r.statusCode !== 200) ok = false;
                 })
                 .pipe(fs.createWriteStream(file));
         });
     });
 
-    const extractRepo = zip => new Promise((res, rej) => {
-        tmp.dir(async (err, dir, fd, clean) => {
+
+    const extractRepo = (zip: string) => new Promise((res, rej) => {
+        tmp.dir(async (err: Error, dir: string) => {
             if (err) return rej(err);
             await extract(zip, {dir}, async() => {
                 const [repo] = fs.readdirSync(dir);
+
                 await fs.copy(path.join(dir, repo), path.join(process.cwd(), ex));
                 res();
             });
         });
     });
 
+
     const file = await download();
-    if (file) await extractRepo(file);
+
+    if (file) await extractRepo(file as string);
 };
 

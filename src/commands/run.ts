@@ -1,11 +1,9 @@
-const {spawn} = require('child_process');
 import {exec} from 'child_process';
 import 'colors';
 import origami from 'origami-cms';
 import {config, Origami} from 'origami-core-lib';
 import * as path from 'path';
 import {Arguments, CommandBuilder} from 'yargs';
-const fs = require('fs-extra');
 
 export const command = 'run [file]';
 export const description = 'Run the Origami app';
@@ -31,7 +29,7 @@ export const builder: CommandBuilder = {
 export const handler = async (yargs: Arguments) => {
     if (yargs.verbose) process.env.LOG_VERBOSE = 'true';
 
-    let c: Origami.Config;
+    let c: Origami.Config | false;
 
     // Allow for default $0 AND run command
     let input = yargs._[0];
@@ -54,7 +52,7 @@ export const handler = async (yargs: Arguments) => {
         // If there's a server port and the open option, load the app in the browser
         if (c.server.port && yargs.open) {
             setTimeout(() => {
-                exec(`open http://localhost:${c.server.port}/`);
+                exec(`open http://localhost:${(c as Origami.Config).server.port}/`);
             }, 1000);
         }
 
