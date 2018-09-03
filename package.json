@@ -53,6 +53,6 @@
     "typescript": "^2.7.2"
   },
   "bin": {
-    "origami": "dist/index"
+    "origami": "dist/index.js"
   }
 }
