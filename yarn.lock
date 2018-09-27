@@ -120,6 +120,12 @@
   version "7.0.64"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.64.tgz#8d5fc50e0944437e48e8aef4ab09910ec8661eee"
 
+"@types/opn@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@types/opn/-/opn-5.1.0.tgz#bff7bc371677f4bdbb37884400e03fd81f743927"
+  dependencies:
+    "@types/node" "*"
+
 "@types/package-json@^4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@types/package-json/-/package-json-4.0.1.tgz#96b83e0785afb15950baad3c571334332d327632"
@@ -1782,6 +1788,10 @@ is-windows@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/is-windows/-/is-windows-1.0.2.tgz#d1850eb9791ecd18e6182ce12a30f396634bb19d"
 
+is-wsl@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-1.1.0.tgz#1f16e4aa22b04d1336b66188a66af3c600c3a66d"
+
 isarray@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf"
@@ -2468,6 +2478,12 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
+opn@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/opn/-/opn-5.4.0.tgz#cb545e7aab78562beb11aa3bfabc7042e1761035"
+  dependencies:
+    is-wsl "^1.1.0"
+
 ora@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ora/-/ora-3.0.0.tgz#8179e3525b9aafd99242d63cc206fd64732741d0"
@@ -2519,6 +2535,19 @@ origami-core-lib@^0.3.11, origami-core-lib@^0.3.12, origami-core-lib@^0.3.9:
 origami-core-lib@^0.3.13-alpha.1, origami-core-lib@^0.3.13-alpha.2:
   version "0.3.13-alpha.2"
   resolved "https://registry.yarnpkg.com/origami-core-lib/-/origami-core-lib-0.3.13-alpha.2.tgz#fb8ce993ad8deee16506b2d9637681fb218b13e4"
+  dependencies:
+    "@types/express" "^4.11.1"
+    bcrypt "^2.0.1"
+    deepmerge "^2.1.1"
+    dot-object "^1.7.0"
+    find-root "^1.1.0"
+    import-from "^2.1.0"
+    jsonwebtoken "^8.3.0"
+    marked "^0.3.6"
+
+origami-core-lib@^0.3.14:
+  version "0.3.14"
+  resolved "https://registry.yarnpkg.com/origami-core-lib/-/origami-core-lib-0.3.14.tgz#c8451c7a5ee83f237e7bb49e86ce77bc692400b1"
   dependencies:
     "@types/express" "^4.11.1"
     bcrypt "^2.0.1"

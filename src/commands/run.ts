@@ -1,5 +1,6 @@
-import {exec} from 'child_process';
 import 'colors';
+// @ts-ignore
+import * as opn from 'opn';
 import origami from 'origami-cms';
 import {config, Origami} from 'origami-core-lib';
 import * as path from 'path';
@@ -47,14 +48,16 @@ export const handler = async (yargs: Arguments) => {
         } catch (e) {}
 
         // Run Origami
+        // @ts-ignore
         new _origami(c as Origami.Config);
 
         // If there's a server port and the open option, load the app in the browser
         if (c.server.port && yargs.open) {
             setTimeout(() => {
-                exec(`open http://localhost:${(c as Origami.Config).server.port}/`);
+                opn(`http://localhost:${(c as Origami.Config).server.port}/`);
             }, 1000);
         }
+        console.log('Origami is now running!'.grey);
 
     } else {
         console.log(
@@ -64,7 +67,6 @@ export const handler = async (yargs: Arguments) => {
             'origami --help'.magenta,
             'for more details'.grey);
     }
-
 };
 
 

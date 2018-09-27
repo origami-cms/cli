@@ -3,10 +3,11 @@ const request = require('request');
 const fs = require('fs-extra');
 const path = require('path');
 const extract = require('extract-zip');
+// tslint:disable-next-line
 const Spinner = require('ora');
 
-import {Arguments, CommandModule} from 'yargs';
 import {Response} from 'request';
+import {Arguments, CommandModule} from 'yargs';
 
 
 export const command = 'example [example]';
@@ -38,16 +39,16 @@ export const handler = async(yargs: Arguments) => {
 
     if (!ex || yargs.list) {
         const spinner = Spinner('Fetching examples...').start();
-        const res = await new Promise((res, rej) => {
+        const res = (await new Promise((res, rej) => {
             request({
                 url: SEARCH_EXAMPLES,
                 headers: REQUEST_HEADERS
-            }, (err, r) => {
-                if (err) rej(err)
+            }, (err: string, r: Response) => {
+                if (err) rej(err);
                 else res(r);
             });
-        })
-        let items;
+        })) as Response;
+        let items: {description: string, name: string}[];
         try {
             items = JSON.parse(res.body).items;
         } catch (e) {
@@ -59,7 +60,7 @@ export const handler = async(yargs: Arguments) => {
 
         items.forEach(i => {
             console.log(`- ${
-                i.name.split('example-').pop().yellow
+                i.name.split('example-').pop()!.yellow
             }\t${
                 i.description.magenta
             }`);
@@ -87,7 +88,7 @@ export const handler = async(yargs: Arguments) => {
                     headers
                 };
 
-                const spinner = Spinner('Downloading example '.magenta + ex.yellow)
+                const spinner = Spinner('Downloading example '.magenta + ex.yellow);
                 spinner.start();
 
                 let ok = true;

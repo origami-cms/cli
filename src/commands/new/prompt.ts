@@ -1,10 +1,10 @@
-import inq from 'inquirer';
-const INQ = require('inquirer');
 import {object as dotObj} from 'dot-object';
-
-import {Origami, PackageJson, config, pkgjson, random} from 'origami-core-lib';
-import defaultData from './defaultData';
+import inq from 'inquirer';
 import * as _ from 'lodash';
+import {Origami, PackageJson, pkgjson, random} from 'origami-core-lib';
+import defaultData from './defaultData';
+const INQ = require('inquirer');
+
 
 
 export interface Answers {
