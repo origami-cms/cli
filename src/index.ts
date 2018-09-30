@@ -2,9 +2,14 @@
 const argv = require('yargs');
 require('colors');
 
+import versionCheck from './lib/versionCheck';
 
-argv.commandDir('./commands', {
-    recurse: true
-});
-argv.argv;
+(async() => {
+    await versionCheck();
+
+    argv.commandDir('./commands', {
+        recurse: true
+    });
+    argv.argv;
+})();
 
