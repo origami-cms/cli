@@ -144,6 +144,10 @@ export default async(): Promise<Origami.Config> => {
         ])
     };
 
+    if (answers.store && answers.store.type) {
+        answers.store.type = answers.store.type.toLowerCase();
+    }
+
 
     // ------------------------------------------------------------------ Server
     const serverDefault = {
@@ -213,8 +217,10 @@ export default async(): Promise<Origami.Config> => {
         file.server.secret = serverDefault.secret;
     }
 
+    // Enable admin by default
+    file.admin = true;
+
     // file.theme.name = file.theme.type;
     // delete file.theme.type;
-
     return file as Origami.Config;
 };

@@ -27,7 +27,7 @@
     "ora": "^3.0.0",
     "origami-bird": "^1.0.0",
     "origami-cms": "^0.2.15-alpha.7",
-    "origami-core-lib": "^0.3.14",
+    "origami-core-lib": "^0.3.15-alpha.4",
     "request": "^2.88.0",
     "semver": "^5.5.1",
     "tmp": "^0.0.33",
