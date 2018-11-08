@@ -23,7 +23,8 @@ It allows developers to quickly create and deploy Origami based website. Current
 - Hello World
 - Todo App
 
-## Commands
+**Commands**
+
 `origami`
 
 By default, running `origami` in your shell will run the `origami run` command.
@@ -38,7 +39,7 @@ Usage: `origami run`
 
 Create a new installation of Origami, downloads the packages, and sets up the `.origami` file.
 
-- Usage: `origami new my-site`
+Usage: `origami new my-site`
 
 
 **Options:**
